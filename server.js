@@ -64,9 +64,9 @@ app.get('/api/trades', (req, res) => {
 // Add a new trade (auto-writes to file)
 app.post('/api/trades', checkPassword, (req, res) => {
     const newTrade = req.body;
-    
+
     // Validate trade data
-    if (!newTrade.orderId || !newTrade.date || 
+    if (!newTrade.orderId || !newTrade.date ||
         typeof newTrade.quantity !== 'number' ||
         typeof newTrade.buyRate !== 'number' ||
         typeof newTrade.sellRate !== 'number' ||
@@ -83,13 +83,13 @@ app.post('/api/trades', checkPassword, (req, res) => {
     newTrade.grossQuantity = newTrade.usdtQuantity * sell;
     newTrade.profit = newTrade.grossQuantity - qty;
 
-    
+
     const trades = readTrades();
     trades.push(newTrade);
-    
+
     // Auto-write to trades.json file
     const saved = writeTrades(trades);
-    
+
     if (saved) {
         console.log('✅ Trade saved successfully. Total trades:', trades.length);
         res.json({ success: true, trade: newTrade, totalTrades: trades.length });
@@ -102,18 +102,18 @@ app.post('/api/trades', checkPassword, (req, res) => {
 app.delete('/api/trades/:orderId', checkPassword, (req, res) => {
     const orderId = parseInt(req.params.orderId);
     console.log('🗑️ DELETE /api/trades/', orderId);
-    
+
     let trades = readTrades();
     const initialLength = trades.length;
     trades = trades.filter(t => t.orderId !== orderId);
-    
+
     if (trades.length === initialLength) {
         return res.status(404).json({ error: 'Trade not found' });
     }
-    
+
     // Auto-write to trades.json file
     const saved = writeTrades(trades);
-    
+
     if (saved) {
         res.json({ success: true, totalTrades: trades.length });
     } else {
@@ -125,7 +125,7 @@ app.delete('/api/trades/:orderId', checkPassword, (req, res) => {
 app.delete('/api/trades', checkPassword, (req, res) => {
     console.log('🗑️ DELETE /api/trades - Resetting all trades');
     const saved = writeTrades([]);
-    
+
     if (saved) {
         res.json({ success: true, message: 'All trades cleared' });
     } else {
