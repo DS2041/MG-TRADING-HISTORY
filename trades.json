@@ -38,5 +38,15 @@
     "usdtQuantity": 630.9989701338826,
     "grossQuantity": 62090.29866117405,
     "profit": 820.2986611740489
+  },
+  {
+    "orderId": 5,
+    "date": "07 . 05 . 2026",
+    "quantity": 36520,
+    "buyRate": 97.7,
+    "sellRate": 98.3,
+    "usdtQuantity": 373.797338,
+    "grossQuantity": 36744.2784,
+    "profit": 224.2784
   }
 ]
