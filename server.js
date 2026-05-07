@@ -11,6 +11,24 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
 
+// ---------- PASSWORD PROTECTION ----------
+const WRITE_PASSWORD = process.env.WRITE_PASSWORD;  // Set on Render
+if (!WRITE_PASSWORD) {
+  console.error('❌ WARNING: WRITE_PASSWORD not set – write operations will be BLOCKED');
+}
+
+function checkPassword(req, res, next) {
+  if (!WRITE_PASSWORD) {
+    return res.status(503).json({ error: 'Server not configured: missing WRITE_PASSWORD' });
+  }
+  const provided = req.headers['x-password'];   // Frontend sends this header
+  if (provided && provided === WRITE_PASSWORD) {
+    next();
+  } else {
+    res.status(401).json({ error: 'Unauthorized: incorrect or missing password' });
+  }
+}
+
 // Path to trades.json file
 const TRADES_FILE = path.join(__dirname, 'trades.json');
 

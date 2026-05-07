@@ -1,6 +1,15 @@
 // API Configuration
 const API_URL = "/api";
 
+// Password helper – asks once and caches
+let cachedPassword = null;
+async function getWritePassword() {
+  if (cachedPassword) return cachedPassword;
+  const pwd = prompt("🔐 Enter password to add / delete trades:");
+  if (pwd) cachedPassword = pwd;
+  return pwd;
+}
+
 // Global state
 let trades = [];
 
@@ -63,12 +72,16 @@ async function fetchTrades() {
 
 async function addTradeToServer(trade) {
   try {
-    console.log("📤 Sending trade to server:", trade);
+
+    const password = await getWritePassword();
+    if (!password) return null;
+
     const response = await fetch(`${API_URL}/trades`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        "X-Password": password,     
       },
       body: JSON.stringify(trade),
     });
@@ -92,8 +105,13 @@ async function addTradeToServer(trade) {
 
 async function deleteTradeFromServer(orderId) {
   try {
+
+    const password = await getWritePassword();
+    if (!password) return false;
+
     const response = await fetch(`${API_URL}/trades/${orderId}`, {
       method: "DELETE",
+      headers: { "X-Password": password },
     });
     if (!response.ok) throw new Error("Failed to delete");
     return true;
@@ -113,8 +131,13 @@ async function resetAllTrades() {
     return;
 
   try {
+
+    const password = await getWritePassword();
+if (!password) return;
+
     const response = await fetch(`${API_URL}/trades`, {
       method: "DELETE",
+      headers: { "X-Password": password }
     });
     if (!response.ok) throw new Error("Failed to reset");
     await fetchTrades();
