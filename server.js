@@ -62,7 +62,7 @@ app.get('/api/trades', (req, res) => {
 });
 
 // Add a new trade (auto-writes to file)
-app.post('/api/trades', (req, res) => {
+app.post('/api/trades', checkPassword, (req, res) => {
     const newTrade = req.body;
     
     // Validate trade data
@@ -99,7 +99,7 @@ app.post('/api/trades', (req, res) => {
 });
 
 // Delete a trade by orderId
-app.delete('/api/trades/:orderId', (req, res) => {
+app.delete('/api/trades/:orderId', checkPassword, (req, res) => {
     const orderId = parseInt(req.params.orderId);
     console.log('🗑️ DELETE /api/trades/', orderId);
     
@@ -122,7 +122,7 @@ app.delete('/api/trades/:orderId', (req, res) => {
 });
 
 // Reset all trades (clear database)
-app.delete('/api/trades', (req, res) => {
+app.delete('/api/trades', checkPassword, (req, res) => {
     console.log('🗑️ DELETE /api/trades - Resetting all trades');
     const saved = writeTrades([]);
     
