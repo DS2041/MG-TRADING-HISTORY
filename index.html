@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Trading Ledger</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="">
+      <div class="space-y-4">
+        <div class="flex w-full justify-center items-center">
+          <div class="status-badge" id="connectionStatus">
+            <span class="w-3 h-3 rounded-full bg-orange-500"></span>
+            <span class="text-sm font-normal tracking-wide">L O A D I N G</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <!-- Add Trade Form -->
+        <div class="rounded-md p-4 bg-white shadow-md mt-4">
+          <div class="flex justify-center items-center mb-6">
+            <h2 class="font-bold text-center text-3xl text-black">
+              Create Order
+            </h2>
+          </div>
+
+          <div class="gap-1 w-full flex justify-between items-center">
+            <div class="">
+              <input
+                type="text"
+                id="orderId"
+                readonly
+                placeholder=""
+                class="p-4 bg-gray-100 cursor-not-allowed rounded-lg text-lg text-center font-extrabold"
+              />
+            </div>
+
+            <div class="">
+              <input
+                type="text"
+                id="tradeDate"
+                readonly
+                class="p-4 bg-gray-100 cursor-not-allowed rounded-lg text-lg text-center font-bold"
+              />
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <small class="text-[#ff0000] font-normal text-sm italic"
+              >total quantity in rupees</small
+            >
+            <input
+              type="number"
+              id="quantity"
+              step="any"
+              placeholder="₹"
+              autocomplete="off"
+              class="mt-2 p-4 bg-gray-100 rounded-lg text-4xl text-center font-bold text-blue-700"
+            />
+          </div>
+
+          <div class="row-2 mt-5">
+            <div class="">
+              <small class="text-[#ff0000] font-normal text-sm italic"
+                >buy price</small
+              >
+              <input
+                type="number"
+                id="buyRate"
+                step="any"
+                placeholder="₹"
+                autocomplete="off"
+                class="mt-2 p-4 bg-gray-100 rounded-lg text-4xl text-center font-bold text-blue-700"
+              />
+            </div>
+            <div class="">
+              <small class="text-[#ff0000] font-normal text-sm italic"
+                >sell price</small
+              >
+              <input
+                type="number"
+                id="sellRate"
+                step="any"
+                placeholder="₹"
+                autocomplete="off"
+                class="mt-2 p-4 bg-gray-100 rounded-lg text-4xl text-center font-bold text-blue-700"
+              />
+            </div>
+          </div>
+
+          <button
+            id="addTradeBtn"
+            class="rounded-lg bg-[#26a17b]/80 w-full mt-5 text-xl py-4 text-white font-bold tracking-wide hover:bg-[#26a17b] transition-colors duration-300"
+          >
+            SAVE
+          </button>
+
+          <div class="flex justify-center items-center gap-1">
+            <button
+              id="refreshBtn"
+              class="w-1/2 bg-green-300 px-4 py-3 rounded-lg mt-3"
+            >
+              refresh
+            </button>
+            <button
+              id="resetBtn"
+              class="text-white w-1/2 bg-red-500 px-4 py-3 rounded-lg mt-3"
+            >
+              delete
+            </button>
+          </div>
+        </div>
+
+        <!-- Investor Split Display -->
+        <div class="rounded-md p-4 bg-white shadow-md">
+          <h2 class="text-center my-4 text-3xl font-bold text-orange-500">
+            Investors Dashboard
+          </h2>
+
+          <div class="rounded-lg bg-green-100 text-center py-8 mb-1">
+            <div class="text-green-700 font-medium text-lg">
+              Total Volume Traded
+            </div>
+            <div
+              class="text-4xl font-bold text-green-900 italic"
+              id="totalVolumeTraded"
+            >
+              ₹0
+            </div>
+          </div>
+
+          <div
+            class="mt-1 mb-1 bg-gray-50 w-full flex justify-between items-center gap-1 rounded-md"
+            id="quickStats"
+          >
+            <div
+              class="w-full flex flex-col p-2 justify-center items-center bg-gray-200 rounded-md"
+            >
+              <div class="text-sm font-light">Total Trades</div>
+              <div class="font-bold text-lg" id="totalTradesCount">0</div>
+            </div>
+            <div
+              class="w-full flex flex-col p-2 justify-center items-center bg-gray-200 rounded-md"
+            >
+              <div class="text-sm font-light">Total Profit</div>
+              <div class="font-bold text-lg" id="totalProfitSum">0</div>
+            </div>
+          </div>
+
+          <div class="rounded-lg bg-green-100 text-center py-8">
+            <div class="text-green-700 font-medium text-lg">
+              Total Reinvested Capital
+            </div>
+            <div
+              class="text-4xl text-green-900 font-bold"
+              id="totalReinvestedCapital"
+            >
+              ₹0
+            </div>
+          </div>
+
+          <div class="flex flex-col space-y-1 mt-1">
+            <div
+              class="flex justify-center items-center rounded-lg bg-blue-100 text-center py-1"
+            >
+              <div class="text-blue-700 text-xl pl-2 pr-1 font-bold">BTD</div>
+              <div
+                class="tracking-wide p-4 font-bold text-2xl bg-blue-600 text-white w-full rounded-lg m-1 flex justify-center items-center"
+                id="btdShare"
+              >
+                ₹0
+              </div>
+            </div>
+            <div
+              class="flex justify-center items-center rounded-lg bg-orange-100 text-center py-1"
+            >
+              <div class="text-orange-700 text-xl pl-2 pr-1 font-bold">SRT</div>
+              <div
+                class="tracking-wide p-4 font-bold text-2xl bg-orange-600 text-white w-full rounded-lg m-1 flex justify-center items-center"
+                id="srtShare"
+              >
+                ₹0
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trade History Table -->
+      <div class="rounded-md p-1 bg-white shadow-md">
+        <div class="flex justify-center items-center mt-4 mb-2">
+          <h2 class="font-bold text-center my-4 text-3xl text-black">
+            Trades History
+          </h2>
+        </div>
+
+        <div style="overflow-x: auto; padding: 0 3px">
+          <table id="tradesTable">
+            <tbody id="tradesTableBody">
+              <tr class="empty-row">
+                <td colspan="9">loading ...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="db-footer text-center w-full flex justify-center">
+          <span id="lastUpdateTime">waiting for server ...</span>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <script>
+      // Disable wheel (scroll) changing number input values
+      document.addEventListener(
+        "wheel",
+        function (e) {
+          if (document.activeElement.type === "number") {
+            e.preventDefault();
+            // Optionally keep the page from scrolling by setting focus back
+            document.activeElement.blur();
+            document.activeElement.focus();
+          }
+        },
+        { passive: false },
+      );
+    </script>
+  </body>
+</html>

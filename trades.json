@@ -1,0 +1,42 @@
+[
+  {
+    "orderId": 1,
+    "date": "07 . 05 . 2026",
+    "quantity": 120000,
+    "buyRate": 97.1,
+    "sellRate": 98.4,
+    "usdtQuantity": 1235.839340885685,
+    "grossQuantity": 121606.59114315141,
+    "profit": 1606.5911431514105
+  },
+  {
+    "orderId": 2,
+    "date": "07 . 05 . 2026",
+    "quantity": 19680,
+    "buyRate": 97.1,
+    "sellRate": 98.4,
+    "usdtQuantity": 202.67765190525233,
+    "grossQuantity": 19943.48094747683,
+    "profit": 263.4809474768299
+  },
+  {
+    "orderId": 3,
+    "date": "07 . 05 . 2026",
+    "quantity": 30000,
+    "buyRate": 97.1,
+    "sellRate": 97.5,
+    "usdtQuantity": 308.95983522142126,
+    "grossQuantity": 30123.583934088572,
+    "profit": 123.58393408857228
+  },
+  {
+    "orderId": 4,
+    "date": "07 . 05 . 2026",
+    "quantity": 61270,
+    "buyRate": 97.1,
+    "sellRate": 98.4,
+    "usdtQuantity": 630.9989701338826,
+    "grossQuantity": 62090.29866117405,
+    "profit": 820.2986611740489
+  }
+]
